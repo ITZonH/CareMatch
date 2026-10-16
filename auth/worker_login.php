@@ -1,7 +1,15 @@
+<?php
+// Name: Hamed Zon
+// ID: cOO259228
+// This is workers login screen
+
+
+//this opens the browser's php session 
+session_start();
+$error = $_SESSION["login_error"] ?? "";
+unset($_SESSION["login_error"]);
+?>
 <!DOCTYPE html>
-<!-- Name: Hamed Zon
-ID: cOO259228
-This is workers login screen -->
 
 <html lang = "en">
 <head>
@@ -12,17 +20,29 @@ This is workers login screen -->
 </head>
 <body>
     <main class = "login-container">
-        <h1> Welcome to CareMatch AI </h1>
-    
-        <p> Sign in to your CareMacth AI  Worker account.</p>
-        <form action = "Login_handler.php" method = "POST">
-            <label for = "email"> Email </label>
-            <input type = "email" id = "email" name = "email" required>
+        <section class = "login-card">
+            <h1> Welcome to CareMatch AI </h1>
+        
+            <p> Sign in to your Health Care Worker account.</p>
+            <?php if(!empty($error)):?>
+                <p class = "error-message" role = "alert">
+                    <?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8');?>
+            </p>
+            <?php endif; ?>
+            <form action = "Login_handler.php" method = "POST">
+                <label for = "email"> Email </label>
+                <input type = "email" id = "email" name = "email" required>
 
-            <label for = "password"> Password </label>
-            <input type = "password" id = "password" name = "password" required>
-            <button type = "submit"> Sign In </button>
-        </form>
+                <label for = "password"> Password </label>
+                <input type = "password" id = "password" name = "password" required>
+                <button type = "button" id = "togglePassword" class = "password-toggle"  aria-press = "false">
+                    Show Password
+                </button>
+
+                <button type = "submit"> Sign In </button>
+            </form>
+        </section>
     </main>
+    <script src = "../assets/js/auth.js" defer></script>
 </body>
 </html>
