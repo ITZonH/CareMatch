@@ -14,41 +14,101 @@ Description: This is the workers registration page -->
     <title>Worker Registration | CareMatch AI</title>
 </head>
 
+
 <body>
-    
-    <?php
-        // this display error message when wrong details is enter
-        if (isset($_SESSION["register_error"])) {
 
-            echo '<p class="error-message">'
-                . htmlspecialchars($_SESSION["register_error"], ENT_QUOTES, 'UTF-8')
-                . '</p>';
+    <!-- this is the main container for the registration page -->
+    <main class="auth-container">
 
-            unset($_SESSION["register_error"]);
-        }
-    ?>
+        <!-- This section holds the registration form -->
+        <section class="auth-card">
 
-    <h1>Create Your Worker Account</h1>
-    <p>Join CareMatch AI and discover healthcare job opportunities.</p>
+            <!-- Displaying the CareMatch AI name and logo -->
+            <div class="auth-brand">
 
-    <form class = "register-form" action="register_handler.php" method = "POST">
-        <label for="full_name">Full Name</label>
-        <input type="text" name="full_name" id="full_name" autocomplete = "name" required>
+                <div class="brand-icon">+</div>
 
-        <label for="email">Email Address</label>
-        <input type="email" name="email" id="email" autocomplete = "email" require>
+                <div>
+                    <div class="brand-name">
+                        CareMatch <span>AI</span>
+                    </div>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" autocomplete = "new_password" require>
+                    <div class="brand-subtitle">
+                        Healthcare careers, connected.
+                    </div>
+                </div>
+            </div>
 
-        <label for="confirm_password"> Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password" autocomplete = "new_password" require>
+            <!-- Heading and description for worker registration -->
+            <h1>Create Your Worker Account</h1>
 
-        <button type="submit">Create Account</button>
-    </form>
-    <p>
-        Already have an account?
-        <a href="worker_login.php">Login</a>
-    </p>
-</body>
+            <p>Join CareMatch AI and discover healthcare job opportunities.</p>
+
+            <?php
+                // checking if there is any registration error
+                if (isset($_SESSION["register_error"])):
+            ?>
+
+                <!-- Displaying the error message to the user -->
+                <p class="error-message" role="alert">
+                    <?php
+                        // displaying the error safely
+                        echo htmlspecialchars(
+                            $_SESSION["register_error"],
+                            ENT_QUOTES,
+                            "UTF-8"
+                        );
+                    ?>
+                </p>
+
+                <?php
+                    // removing the error after displaying it
+                    unset($_SESSION["register_error"]);
+                ?>
+
+            <?php endif; ?>
+
+            <!-- This form collects the worker registration details -->
+            <form class="register-form"
+                  action="worker_register_handler.php"
+                  method="POST">
+
+                <!-- Getting the worker full name -->
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name"
+                       name="full_name" autocomplete="name"
+                       maxlength="100" required>
+
+                <!-- Getting the worker email address -->
+                <label for="email">Email Address</label>
+                <input type="email" id="email"
+                       name="email" autocomplete="email" required>
+
+                <!-- Getting the worker password -->
+                <label for="password">Password</label>
+                <input type="password" id="password"
+                       name="password" autocomplete="new-password"
+                       minlength="12" required>
+
+                <!-- Asking the worker to confirm the password -->
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password"
+                       name="confirm_password" autocomplete="new-password"
+                       minlength="12" required>
+
+                <!-- Button to submit the registration form -->
+                <button type="submit">Create Account</button>
+
+            </form>
+
+            <!-- Link for workers who already have an account -->
+            <p class="auth-footer">
+                Already have an account?
+                <a href="worker_login.php">Sign in</a>
+            </p>
+
+        </section>
+    </main>
+
+    </body>
 </html>

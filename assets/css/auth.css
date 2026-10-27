@@ -1,0 +1,275 @@
+
+/*
+Name: Hamed Zon
+Date: 27/10/2026
+Description: Styling for the CareMatch AI login and registration pages
+*/
+
+/* setting the main colours for the website */
+:root {
+    --navy: #17324d;
+    --teal: #167d8d;
+    --teal-dark: #116575;
+    --background: #f4f7fb;
+    --text: #334155;
+    --muted: #64748b;
+    --border: #cbd5e1;
+}
+
+/* making sure padding and borders are included in element sizes */
+* {
+    box-sizing: border-box;
+}
+
+/* styling the background and font for the pages */
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f4f7fb, #e8f3f5);
+    color: var(--text);
+}
+
+/* centering the login and registration cards */
+.login-container,
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+/* styling the cards used for login and registration */
+.login-card,
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 36px;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 10px 35px rgba(23, 50, 77, 0.09);
+}
+
+/* displaying the CareMatch AI logo and name beside each other */
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+/* styling the small logo icon */
+.brand-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    background-color: var(--teal);
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* styling the CareMatch AI name */
+.brand-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--navy);
+}
+
+/* changing the AI part of the name to teal */
+.brand-name span {
+    color: var(--teal);
+}
+
+/* styling the small text underneath the website name */
+.brand-subtitle {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* styling the main headings on both pages */
+.login-card h1,
+.auth-card h1 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    color: var(--navy);
+    text-align: center;
+}
+
+/* styling the description underneath the headings */
+.auth-description {
+    margin: 0 0 28px;
+    font-size: 15px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* making the forms fit inside their cards */
+.login-card form,
+.register-form {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* styling the labels above the input fields */
+.login-card label,
+.register-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+/* styling the email, name and password fields */
+.login-card input,
+.register-form input {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: white;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+}
+
+/* highlighting an input field when the user clicks on it */
+.login-card input:focus,
+.register-form input:focus {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+    border-color: var(--teal);
+}
+
+/* styling the login and registration submit buttons */
+.login-card button[type="submit"],
+.register-form button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* changing the submit button colour when the mouse is over it */
+.login-card button[type="submit"]:hover,
+.register-form button[type="submit"]:hover {
+    background-color: var(--teal-dark);
+}
+
+/* styling the show password button */
+.password-toggle {
+    display: inline-block;
+    width: auto;
+    padding: 8px 12px;
+    margin: -6px 0 20px;
+    background-color: transparent;
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* changing the show password button colour when hovered */
+.password-toggle:hover {
+    background-color: #e6f4f5;
+}
+
+/* styling the error and success messages */
+.error-message,
+.success-message {
+    width: 100%;
+    padding: 12px;
+    margin: 0 0 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* displaying registration and login errors in red */
+.error-message {
+    background-color: #fff1f2;
+    color: #9f1239;
+    border: 1px solid #fecdd3;
+}
+
+/* displaying successful registration messages in green */
+.success-message {
+    background-color: #e6f7f1;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+/* styling the text and links underneath the forms */
+.auth-footer {
+    margin: 25px 0 0;
+    font-size: 14px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* styling the sign in and create account links */
+.auth-footer a {
+    color: var(--teal);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* underlining links when the mouse is over them */
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* highlighting buttons and links for keyboard users */
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}
+
+/* adjusting the layout for mobile phones */
+@media (max-width: 480px) {
+
+    /* reducing the space around the cards */
+    .login-container,
+    .auth-container {
+        padding: 18px 14px;
+    }
+
+    /* reducing card padding on smaller screens */
+    .login-card,
+    .auth-card {
+        padding: 26px 20px;
+    }
+
+    /* making headings smaller on mobile */
+    .login-card h1,
+    .auth-card h1 {
+        font-size: 24px;
+    }
+
+    /* adjusting the website name on mobile */
+    .brand-name {
+        font-size: 20px;
+    }
+}
