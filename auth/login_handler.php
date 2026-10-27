@@ -1,4 +1,7 @@
 <?php
+// Name: Hamed Zon
+// ID: C00259228
+// Description: This is the login manager
 
 session_start();
 //Only allows post requests
@@ -29,10 +32,10 @@ if($_SERVER["REQUEST_METHOD"] !== "POST"){
     }
 
     //connect to the carematch db
-require_once __DIR__.'/config/database.php';
+require_once __DIR__.'/../config/database.php';
 
 //finding user using the email
-$spl = "SELECT user_id, email, password_hash, role, account_status FROM users WHERE email = ?";
+$sql = "SELECT user_id, email, password_hash, role, account_status FROM users WHERE email = ?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$email]);
@@ -50,7 +53,7 @@ if(!$user || !password_verify($password, $user["password_hash"]) ){
 if($user["account_status"] !=="active"){
     $_SESSION["login_error"] = "Your account is not active.";
 
-    header("Location:worker_login.php", true. 303);
+    header("Location:worker_login.php", true, 303);
     exit;
 }
 
