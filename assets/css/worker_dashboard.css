@@ -1,0 +1,279 @@
+
+/*
+Name: Hamed Zon
+ID: C00259228
+Date: 24/10/2026
+Description: This file styles the CareMatch AI healthcare worker dashboard
+*/
+
+/* making sure padding is included in element sizes */
+* {
+    box-sizing: border-box;
+}
+
+/* styling the main page */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fb;
+    color: #334155;
+    line-height: 1.5;
+}
+
+/* placing the sidebar and dashboard beside each other */
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* styling the worker sidebar */
+.sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    padding: 30px 20px;
+    background-color: #17324d;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+/* styling the CareMatch AI name */
+.sidebar h2 {
+    margin: 0 0 45px;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* changing the AI text colour */
+.sidebar h2 span {
+    color: #43c6c6;
+}
+
+/* styling the sidebar navigation */
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+/* styling the sidebar links */
+.sidebar a {
+    display: block;
+    padding: 13px 16px;
+    color: #dbe7f0;
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 500;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* changing the link background when hovered */
+.sidebar a:hover {
+    background-color: #264c6d;
+    color: white;
+    transform: translateX(3px);
+}
+
+/* highlighting the current dashboard page */
+.sidebar a.active {
+    background-color: #167d8d;
+    color: white;
+    font-weight: 600;
+}
+
+/* styling the logout link */
+.sidebar nav a:last-child {
+    margin-top: auto;
+    background-color: #244761;
+}
+
+.sidebar nav a:last-child:hover {
+    background-color: #a33d4a;
+    transform: none;
+}
+
+/* styling the main dashboard content */
+.dashboard-main {
+    flex: 1;
+    min-width: 0;
+    padding: 45px 45px 60px;
+}
+
+/* styling the dashboard heading */
+.dashboard-main h1 {
+    margin: 0 0 12px;
+    color: #17324d;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* styling the welcome message */
+.dashboard-description {
+    color: #64748b;
+    margin: 0 0 35px;
+    line-height: 1.7;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+}
+
+/* arranging the dashboard cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+/* styling each dashboard card */
+.dashboard-card {
+    padding: 28px;
+    min-height: 190px;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(23, 50, 77, 0.04);
+
+    transition:
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+/* adding a hover effect to dashboard cards */
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    border-color: #b8dadd;
+    box-shadow: 0 10px 28px rgba(23, 50, 77, 0.09);
+}
+
+/* styling the card headings */
+.dashboard-card h3 {
+    margin: 0 0 15px;
+    color: #17324d;
+    font-size: 18px;
+}
+
+/* styling the card descriptions */
+.dashboard-card p {
+    margin: 0 0 18px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* styling the upcoming features label */
+.coming-soon {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #edf4f7;
+    color: #426275;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* improving keyboard navigation accessibility */
+.sidebar a:focus-visible {
+    outline: 3px solid #43c6c6;
+    outline-offset: 3px;
+}
+
+/* making the dashboard responsive on smaller screens */
+@media (max-width: 1100px) {
+
+    .dashboard-main {
+        padding: 35px 30px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* adjusting the layout for tablets */
+@media (max-width: 750px) {
+
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding: 20px;
+    }
+
+    .sidebar h2 {
+        margin-bottom: 20px;
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .sidebar nav a:last-child {
+        margin-top: 0;
+    }
+
+    .dashboard-main {
+        padding: 30px 22px;
+    }
+}
+
+/* adjusting the layout for mobile phones */
+@media (max-width: 600px) {
+
+    .dashboard-main {
+        padding: 25px 18px;
+    }
+
+    .dashboard-main h1 {
+        font-size: 26px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .dashboard-card {
+        padding: 22px;
+        min-height: auto;
+    }
+
+    .sidebar nav {
+        flex-direction: column;
+    }
+
+    .sidebar a {
+        width: 100%;
+    }
+}
+
+/* reducing animations for users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .sidebar a,
+    .dashboard-card {
+        transition: none;
+    }
+
+    .sidebar a:hover,
+    .dashboard-card:hover {
+        transform: none;
+    }
+}
+

@@ -1,6 +1,7 @@
 <?php
 // Name: Hamed Zon
 // ID: cOO259228
+// date: 11/10/2026
 // This is workers login screen
 
 
@@ -56,11 +57,7 @@ unset($_SESSION["login_error"]);
                 <!-- Displaying the success message -->
                 <p class="success-message" role="status">
                     <?php
-                        echo htmlspecialchars(
-                            $_SESSION["register_success"],
-                            ENT_QUOTES,
-                            "UTF-8"
-                        );
+                        echo htmlspecialchars($_SESSION["register_success"], ENT_QUOTES, "UTF-8");
 
                         // removing the message after displaying it
                         unset($_SESSION["register_success"]);
@@ -77,11 +74,7 @@ unset($_SESSION["login_error"]);
                 <!-- Displaying the login error -->
                 <p class="error-message" role="alert">
                     <?php
-                        echo htmlspecialchars(
-                            $error,
-                            ENT_QUOTES,
-                            "UTF-8"
-                        );
+                        echo htmlspecialchars($error, ENT_QUOTES, "UTF-8");
                     ?>
                 </p>
 
@@ -92,20 +85,14 @@ unset($_SESSION["login_error"]);
 
                 <!-- Getting the worker email address -->
                 <label for="email">Email Address</label>
-                <input type="email" id="email"
-                       name="email" autocomplete="email" required>
+                <input type="email" id="email" name="email" autocomplete="email" required>
 
                 <!-- Getting the worker password -->
                 <label for="password">Password</label>
-                <input type="password" id="password"
-                       name="password" autocomplete="current-password"
-                       required>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
 
                 <!-- Button to show or hide the password -->
-                <button type="button"
-                        id="togglePassword"
-                        class="password-toggle"
-                        aria-pressed="false">
+                <button type="button" id="togglePassword" class="password-toggle" aria-pressed="false">
                     Show Password
                 </button>
 
