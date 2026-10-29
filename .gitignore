@@ -1,0 +1,51 @@
+
+# Name: Hamed Zon
+# ID: C00259228
+# Date: 25/10/2026
+# Description: This file tells Git which files and folders
+# should not be uploaded to the CareMatch AI GitHub repository.
+
+# ignoring files that may contain passwords or secret information
+.env
+.env.*
+!.env.example
+secrets.php
+*_secrets.php
+
+# ignoring my local database connection file
+# because it may contain my MySQL username and password
+config/database.php
+
+# ignoring files I used for testing and setting up the project
+test_db.php
+auth/test_admin_login.php
+admin/setup_admin.php
+admin/create_second_admin.php
+
+# ignoring temporary files created while working on the project
+*.log
+*.tmp
+*.bak
+*.swp
+
+# ignoring files created by Windows and other operating systems
+Thumbs.db
+.DS_Store
+
+# ignoring settings created by my code editor
+.vscode/
+.idea/
+
+# ignoring installed packages
+vendor/
+node_modules/
+
+# ignoring uploaded files such as healthcare worker CVs
+uploads/
+storage/uploads/
+
+# ignoring Python environment and cache files
+.venv/
+venv/
+__pycache__/
+*.pyc
