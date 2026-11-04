@@ -57,14 +57,16 @@ $email = $_SESSION["email"] ?? "";
             <nav aria-label="Employer navigation">
 
                 <!-- link to the current dashboard page -->
-                <a href="dashboard.php"
-                   class="active"
-                   aria-current="page">
+                <a href="dashboard.php" class="active" aria-current="page">
                     Dashboard
                 </a>
 
-                <!-- job posting page will be added later -->
+                
+                <!-- link to the employer job postings section -->
                 <a href="#job-postings">Job Postings</a>
+
+                <!-- link for employers to create a new job -->
+                <a href="post_job.php">Post New Job</a>
 
                 <!-- applications page will be added later -->
                 <a href="#applications">Applications</a>
@@ -100,17 +102,24 @@ $email = $_SESSION["email"] ?? "";
             <!-- displaying the employer dashboard cards -->
             <div class="dashboard-cards">
 
-                <!-- card for managing job postings -->
-                <section class="dashboard-card" id="job-postings">
+               
+            <!-- card for managing job postings -->
+            <section class="dashboard-card" id="job-postings">
 
-                    <h3>Job Postings</h3>
+                <h3>Job Postings</h3>
 
-                    <p>
-                        Create and manage healthcare job
-                        opportunities for your organisation.
-                    </p>
+                <p>
+                    Create and manage healthcare job
+                    opportunities for your organisation.
+                </p>
 
-                </section>
+                <!-- button for creating a new job posting -->
+                <a href="post_job.php" class="post-job-btn">
+                    Post New Job
+                </a>
+
+            </section>
+
 
                 <!-- card for viewing job applications -->
                 <section class="dashboard-card" id="applications">
