@@ -34,6 +34,7 @@ require_once __DIR__ . "/../config/database.php";
 $totalEmployers = 0;
 $totalWorkers = 0;
 $pendingApprovals = 0;
+$totalJobs = 0;
 
 // tracking whether the statistics loaded successfully
 $statisticsLoaded = false;
@@ -62,6 +63,13 @@ try {
     );
 
     $pendingApprovals = (int) $stmt->fetchColumn();
+
+     // counting all job postings submitted by employers
+    $stmt = $pdo->query(
+        "SELECT COUNT(*) FROM jobs"
+    );
+
+    $totalJobs = (int) $stmt->fetchColumn();
 
     // confirming that the statistics loaded successfully
     $statisticsLoaded = true;
@@ -129,7 +137,7 @@ try {
                     Worker Management
                 </a>
 
-                <a href="#job-management">
+               <a href="manage_jobs.php">
                     Job Management
                 </a>
 
@@ -233,12 +241,12 @@ try {
 
                     </article>
 
-                    <!-- job posting statistics will be connected later -->
+                     <!-- displaying the total number of job postings -->
                     <article class="stat-card">
 
                         <h3>Job Postings</h3>
 
-                        <p>—</p>
+                        <p> <?php echo $statisticsLoaded ? $totalJobs : "—"; ?> </p>
 
                         <span>Jobs on the platform</span>
 
@@ -287,19 +295,19 @@ try {
 
                     </article>
 
-                    <!-- job management feature will be added later -->
+                    <!-- displaying the job management feature -->
                     <article class="management-card" id="job-management">
 
                         <h3>Job Management</h3>
 
                         <p>
-                            Review job postings and manage
-                            opportunities published by employers.
+                            Review jobs submitted by employers
+                            and approve or reject pending job postings.
                         </p>
 
-                        <span class="coming-soon">
-                            Coming Soon
-                        </span>
+                        <a href="manage_jobs.php" class="management-link">
+                            Manage Jobs
+                        </a>
 
                     </article>
 
