@@ -28,6 +28,42 @@ if (empty($_SESSION["csrf_token"])) {
 // connecting to the database
 require_once __DIR__ . "/../config/database.php";
 
+
+ // checking that the logged-in admin account is active
+try {
+
+    // preparing the query to get the admin account status
+    $stmt = $pdo->prepare(
+        "SELECT account_status
+         FROM users
+         WHERE user_id = :user_id
+         AND role = 'admin'"
+    );
+
+    // executing the query using the logged in admin ID
+    $stmt->execute([
+        ":user_id" => (int) $_SESSION["user_id"]
+    ]);
+
+    // getting the admin account status from the database
+    $accountStatus = $stmt->fetchColumn();
+
+    // preventing inactive admins from accessing this page
+    if ($accountStatus !== "active") {
+        http_response_code(403);
+        exit("Your admin account must be active.");
+    }
+
+} catch (PDOException $e) {
+
+    // recording database errors without displaying sensitive details
+    error_log("Admin verification error: " . $e->getMessage());
+
+    // displaying a general error if admin verification fails
+    http_response_code(500);
+    exit("Unable to verify admin account.");
+}
+
 // getting all jobs submitted by employers
 $sql = "SELECT
             jobs.job_id,
@@ -60,10 +96,10 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Manage Jobs | CareMatch AI Admin</title>
     <!-- connecting the admin CSS -->
     <link rel="stylesheet" href="../assets/css/admin.css">
+    <title>Manage Jobs | CareMatch AI Admin</title>
+    
 
 </head>
 
@@ -205,124 +241,30 @@ $jobs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </td>
 
                             <td>
-                                    <span class="job-status <?php echo htmlspecialchars(
-                                        $job["approval_status"],
+                                <span class="job-status <?php echo htmlspecialchars(
+                                    $job["approval_status"],
+                                    ENT_QUOTES,
+                                    "UTF-8"
+                                ); ?>">
+
+                                    <?php echo htmlspecialchars(
+                                        ucfirst($job["approval_status"]),
                                         ENT_QUOTES,
                                         "UTF-8"
-                                    ); ?>">
+                                    ); ?>
 
-                                        <?php echo htmlspecialchars(
-                                            ucfirst($job["approval_status"]),
-                                            ENT_QUOTES,
-                                            "UTF-8"
-                                        ); ?>
-
-                                    </span>
-                                </td>
-                            <td>
-
-                            <!-- only allowing pending jobs to be reviewed -->
-                            <?php if ($job["approval_status"] === "pending"): ?>
-
-                                <!-- form for approving or rejecting a job -->
-                                <form action="update_job_approval.php" method="POST" class="job-actions">
-
-                                    <!-- sending the CSRF token -->
-                                    <input
-                                        type="hidden"
-                                        name="csrf_token"
-                                        value="<?php echo htmlspecialchars(
-                                            $_SESSION["csrf_token"],
-                                            ENT_QUOTES,
-                                            "UTF-8"
-                                        ); ?>">
-
-                                    <!-- sending the job ID -->
-                                    <input
-                                        type="hidden" name="job_id"  
-                                        value="<?php echo (int) $job["job_id"]; ?>">
-
-                                    <!-- button for approving a job -->
-                                    <button type="submit"  name="action"
-                                            value="approved" class="approve-button">
-                                        Approve
-                                    </button>
-
-                                    <!-- button for rejecting a job -->
-                                    <button type="submit"  name="action"
-                                            value="rejected"  class="reject-button">
-                                        Reject
-                                    </button>
-
-                                </form>
+                                </span>
+                            </td>
 
                             
-                            <?php elseif ($job["approval_status"] === "approved"): ?>
-
-                                <!-- allowing admins to revoke approval -->
-                                <form action="update_job_approval.php" method="POST" class="job-actions">
-
-                                    <!-- sending the CSRF token -->
-                                    <input
-                                        type="hidden"
-                                        name="csrf_token"
-                                        value="<?php echo htmlspecialchars(
-                                            $_SESSION["csrf_token"],
-                                            ENT_QUOTES,
-                                            "UTF-8"
-                                        ); ?>"
-                                    >
-
-                                    <!-- sending the job ID -->
-                                    <input
-                                        type="hidden"
-                                        name="job_id"
-                                        value="<?php echo (int) $job["job_id"]; ?>"
-                                    >
-
-                                    <!-- button for revoking job approval -->
-                                    <button type="submit" name="action" value="pending" class="reject-button">
-                                        Revoke Approval
-                                    </button>
-
-                                </form>
-
-                            <?php elseif ($job["approval_status"] === "rejected"): ?>
-
-                            <!-- allowing admins to undo a rejected job -->
-                            <form action="update_job_approval.php" method="POST" class="job-actions">
-
-                                <!-- sending the CSRF token -->
-                                <input
-                                    type="hidden"
-                                    name="csrf_token"
-                                    value="<?php echo htmlspecialchars(
-                                        $_SESSION["csrf_token"],
-                                        ENT_QUOTES,
-                                        "UTF-8"
-                                    ); ?>"
-                                >
-
-                                <!-- sending the job ID -->
-                                <input
-                                    type="hidden"
-                                    name="job_id"
-                                    value="<?php echo (int) $job["job_id"]; ?>">
-
-                                <!-- button for undoing rejection -->
-                                <button type="submit" name="action" value="pending" class="approve-button">
-                                    Undo Rejection
-                                </button>
-
-                            </form>
-
-                        <?php else: ?>
-
-                            <span class="reviewed-label">No Action</span>
-
-                        <?php endif; ?>
-
+                            <td>
+                                <!-- allowing admins to review the job before making a decision -->
+                                <a href="job_details.php?job_id=<?php echo (int) $job["job_id"]; ?>"
+                                class="management-link">
+                                    View Details
+                                </a>
                             </td>
+
 
                         </tr>
 
