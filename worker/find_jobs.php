@@ -108,6 +108,14 @@ try {
         exit("Your worker account must be approved and active.");
     }
 
+        // checking that the search filters contain valid text values
+    foreach (["search", "category", "location", "employment_type"] as $key) {
+        if (isset($_GET[$key]) && !is_string($_GET[$key])) {
+            http_response_code(400);
+            exit("Invalid search or filter value.");
+        }
+    }
+
     // getting the search and filter values
     $search = trim($_GET["search"] ?? "");
     $category = trim($_GET["category"] ?? "");
@@ -213,7 +221,12 @@ try {
     http_response_code(500);
     exit("Unable to load jobs. Please try again.");
 }
+
+    // setting the title for the shared header
+    $pageTitle = "Find Healthcare Jobs";
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -224,55 +237,39 @@ try {
 
     <title>Find Jobs | CareMatch AI</title>
 
+   <!-- connecting the shared page layout CSS -->
+    <link rel="stylesheet" href="../assets/css/shared/layout.css">
+
+    <!-- connecting the shared sidebar CSS -->
+    <link rel="stylesheet" href="../assets/css/shared/sidebar.css">
+
+    <!-- connecting the shared header CSS -->
+    <link rel="stylesheet" href="../assets/css/shared/header.css">
+
+    <!-- connecting the shared footer CSS -->
+    <link rel="stylesheet" href="../assets/css/shared/footer.css">
+
     <!-- connecting the worker dashboard CSS -->
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/worker_dashboard.css">
 
 </head>
 
 <body>
 
-    <!-- placing the sidebar and job search beside each other -->
-    <div class="dashboard-layout">
+    <!-- this is the shared page layout -->
+<div class="cm-layout cm-layout--worker">
 
-        <!-- displaying the worker sidebar -->
-        <aside class="sidebar">
+    <!-- displaying the shared sidebar -->
+    <?php require __DIR__ . "/../includes/sidebar.php"; ?>
 
-            <!-- displaying the CareMatch AI name -->
-            <h2>CareMatch <span>AI</span></h2>
+    <!-- holding the header, job search content and footer -->
+    <div class="cm-layout__main">
 
-            <!-- displaying the worker navigation links -->
-            <nav aria-label="Worker navigation">
-
-                <a href="dashboard.php">
-                    Dashboard
-                </a>
-
-                <a href="find_jobs.php"
-                   class="active"
-                   aria-current="page">
-                    Find Jobs
-                </a>
-
-                <a href="my_applications.php">
-                    My Applications
-                </a>
-
-                <a href="dashboard.php#my-profile">
-                    My Profile
-                </a>
-
-                <a href="../auth/logout.php">
-                    Log Out
-                </a>
-
-            </nav>
-
-        </aside>
+        <!-- displaying the shared header -->
+        <?php require __DIR__ . "/../includes/header.php"; ?>
 
         <!-- displaying the job search content -->
-        <main class="dashboard-main">
-
+        <main class="cm-layout__content">
             <!-- displaying the page heading -->
             <h1>Find Healthcare Jobs</h1>
 
@@ -302,8 +299,7 @@ try {
                             id="search"
                             name="search"
                             placeholder="Search job title or skills"
-                            value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>"
-                        >
+                            value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
 
                     </div>
 
@@ -352,8 +348,7 @@ try {
 
                                 <option
                                     value="<?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>"
-                                    <?php echo $location === $item ? 'selected' : ''; ?>
-                                >
+                                    <?php echo $location === $item ? 'selected' : ''; ?>>
                                     <?php echo htmlspecialchars($item, ENT_QUOTES, 'UTF-8'); ?>
                                 </option>
 
@@ -511,8 +506,7 @@ try {
                                     }
 
                                     // displaying the description safely
-                                    echo htmlspecialchars(
-                                        $description,
+                                    echo htmlspecialchars( $description,
                                         ENT_QUOTES,
                                         "UTF-8"
                                     );
@@ -540,7 +534,12 @@ try {
 
         </main>
 
+        <!-- displaying the shared footer -->
+        <?php require __DIR__ . "/../includes/footer.php"; ?>
+
     </div>
+
+</div>
 
 </body>
 </html>
