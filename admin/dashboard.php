@@ -130,7 +130,7 @@ try {
                 </a>
 
                 <a href="#employer-approvals">
-                    Employer Approvals
+                    Employer Management
                 </a>
 
                 <a href="#worker-management">
@@ -263,37 +263,38 @@ try {
 
                 <div class="management-grid">
 
-                    <!-- employer approval feature will be added later -->
+                    <!-- displaying the employer approval feature -->
                     <article class="management-card" id="employer-approvals">
 
                         <h3>Employer Approvals</h3>
 
                         <p>
-                            Review employer registrations and manage
-                            account approval requests.
+                            Review registered employers and approve,
+                            reject or undo account approval decisions.
                         </p>
 
-                        <span class="coming-soon">
-                            Coming Soon
-                        </span>
+                        <a href="manage_employers.php" class="management-link">
+                            Manage Employers
+                        </a>
 
                     </article>
 
-                    <!-- worker management feature will be added later -->
+                    
+                    <!-- displaying the worker management feature -->
                     <article class="management-card" id="worker-management">
 
                         <h3>Worker Management</h3>
 
                         <p>
-                            View registered healthcare workers and
-                            manage their accounts.
+                            View registered workers and manage their account status.
                         </p>
 
-                        <span class="coming-soon">
-                            Coming Soon
-                        </span>
+                        <a href="manage_workers.php" class="management-link">
+                            Manage Workers
+                        </a>
 
                     </article>
+
 
                     <!-- displaying the job management feature -->
                     <article class="management-card" id="job-management">
