@@ -31,12 +31,6 @@ $isLocal = in_array(
     true
 );
 
-$isAdmin = ($_SESSION["role"] ?? "") === "admin";
-
-if (!$isLocal && !$isAdmin) {
-    http_response_code(403);
-    exit("Administrator registration is not permitted.");
-}
 
 // Get registration details
 $email = trim($_POST["email"] ?? "");
@@ -58,6 +52,49 @@ if ($password !== $confirmPassword) {
 
 // Connect to MySQL
 require_once __DIR__ . "/../config/database.php";
+
+// checking if administrator registration is permitted
+if (!$isLocal) {
+
+    // checking if the logged in user is an administrator
+    if (
+        !isset($_SESSION["user_id"]) ||
+        ($_SESSION["role"] ?? "") !== "admin"
+    ) {
+        http_response_code(403);
+        exit("Administrator registration is not permitted.");
+    }
+
+    try {
+
+        // checking that the administrator account is active
+        $stmt = $pdo->prepare(
+            "SELECT account_status
+             FROM users
+             WHERE user_id = :user_id
+             AND role = 'admin'"
+        );
+
+        // executing the query using the logged-in admin ID
+        $stmt->execute([
+            ":user_id" => (int) $_SESSION["user_id"]
+        ]);
+
+        // preventing inactive administrators from registering admins
+        if ($stmt->fetchColumn() !== "active") {
+            http_response_code(403);
+            exit("Your administrator account must be active.");
+        }
+
+    } catch (PDOException $e) {
+
+        // recording database errors
+        error_log("Admin verification error: " . $e->getMessage());
+
+        http_response_code(500);
+        exit("Unable to verify administrator account.");
+    }
+}
 
 try {
 
